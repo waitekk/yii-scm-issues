@@ -12,10 +12,10 @@ Setup
 * Extract modules' contents into /protected/modules directory
 * In config.php add
 
-`
-'modules' => array(
-    // .. some code here ..
-    'issues' => array(
+
+    'modules' => array(
+        // .. some code here ..
+        'issues' => array(
         'username' => 'your_bitbucket_username',
         'password' => 'your_bitbucket_password',
         'repoSlug' => 'your_bitbucket_repo_slug' // see https://confluence.atlassian.com/display/BITBUCKET/What+is+a+Slug
@@ -24,6 +24,6 @@ Setup
             'resolved', 'wontfix', 'duplicate', 'invalid'
         )
     )
-)
-`
+
+
 * Proceed to http://your-yii-app/issues
