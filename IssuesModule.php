@@ -11,6 +11,8 @@
  */
 class IssuesModule extends CWebModule
 {
+    public $defaultController = 'tracker';
+
     /**
      * Your Bitbucket username
      */
