@@ -24,12 +24,12 @@ class IssuesModule extends CWebModule
     /**
      * Your Bitbucket repo slug (see https://confluence.atlassian.com/display/BITBUCKET/What+is+a+Slug)
      */
-    public $repo_slug;
+    public $repoSlug;
 
     /**
      * Hide issues with this type set
      */
-    public $hide_issues = array('resolved', 'wontfix', 'duplicate', 'invalid');
+    public $hideIssues = array('resolved', 'wontfix', 'duplicate', 'invalid');
 
     public function init()
 	{
