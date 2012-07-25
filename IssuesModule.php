@@ -9,6 +9,8 @@
  * @copyright Copyright &copy; Max Zaets 2012-
  * @license http://opensource.org/licenses/MIT MIT License
  */
+
+Yii::import('application.modules.issues.extensions.curl.Curl');
 class IssuesModule extends CWebModule
 {
     public $defaultController = 'tracker';
@@ -33,6 +35,16 @@ class IssuesModule extends CWebModule
      */
     public $hideIssues = array('resolved', 'wontfix', 'duplicate', 'invalid');
 
+    /**
+     * Allowed Git SCM providers
+     */
+    protected $providers = array('github', 'bitbucket');
+
+    /**
+     * Git SCM provider
+     */
+    public $provider;
+
     public function init()
 	{
 		// this method is called when the module is being created
@@ -42,7 +54,14 @@ class IssuesModule extends CWebModule
 		$this->setImport(array(
 			'issues.models.*',
 			'issues.components.*',
+            'issues.extensions'
 		));
+
+        // check if there's a proper provider set
+        if(!in_array($this->provider, $this->providers, true))
+        {
+            throw new CException(Yii::t('issues', 'Wrong Git SCM provider set, please check your config file.'));
+        }
 	}
 
 	public function beforeControllerAction($controller, $action)
