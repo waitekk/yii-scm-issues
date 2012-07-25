@@ -17,35 +17,12 @@
 </head>
 
 <body>
-<?php $this->widget('bootstrap.widgets.BootNavbar', array(
-    'fixed'=>true,
-    'brand'=>Yii::app()->name,
-    'brandUrl'=>'/',
-    'collapse'=>true, // requires bootstrap-responsive.css
-    'items'=>array(
-        array(
-            'class'=>'bootstrap.widgets.BootMenu',
-            'items'=>array(
-                //
-            ),
-        ),
-        '<form class="navbar-search pull-left" action=""><input type="text" class="search-query span2" placeholder="Search"></form>',
-        array(
-            'class'=>'bootstrap.widgets.BootMenu',
-            'htmlOptions'=>array('class'=>'pull-right'),
-            'items'=>array(
-                array('label'=>'Login', 'url'=>array('/site/login'), 'visible'=>Yii::app()->user->isGuest),
-                array('label'=>'Logout ('.Yii::app()->user->name.')', 'url'=>array('/site/logout'), 'visible'=>!Yii::app()->user->isGuest)
-            ),
-        ),
-    ),
-)); ?>
 <div class="container">
+    <h1 style="margin:25px auto;"><?php echo Yii::t('issues', 'Issues tracker');?></h1>
     <?php
     if(Yii::app()->getRequest()->requestUri != '/')
     {
         $this->widget('bootstrap.widgets.BootBreadcrumbs', array(
-            'homeLink'=>array('label'=>'На сайт','url'=>'/'),
             'links'=>$this->breadcrumbs,
         ));
     }
