@@ -16,34 +16,37 @@ class IssuesModule extends CWebModule
     public $defaultController = 'tracker';
 
     /**
-     * Your Bitbucket username
+     * SCM provider
+     */
+    public $provider;
+
+    /**
+     * Your SCM provider username
      */
     public $username;
 
     /**
-     * Your Bitbucket Password
+     * Your SCM provider Password
      */
     public $password;
 
     /**
-     * Your Bitbucket repo slug (see https://confluence.atlassian.com/display/BITBUCKET/What+is+a+Slug)
+     * Your repo slug (see https://confluence.atlassian.com/display/BITBUCKET/What+is+a+Slug)
      */
     public $repoSlug;
 
     /**
      * Hide issues with this type set
+     * TODO: deal with this, either leave or implement support of
      */
-    public $hideIssues = array('resolved', 'wontfix', 'duplicate', 'invalid');
+    /*public $hideIssues = array('resolved', 'wontfix', 'duplicate', 'invalid');*/
 
     /**
      * Allowed Git SCM providers
+     * If you want to use a provider other than the bundled one,
+     * see models/ScmProvider.php for implementation details.
      */
     protected $providers = array('github', 'bitbucket');
-
-    /**
-     * Git SCM provider
-     */
-    public $provider;
 
     public function init()
 	{
@@ -60,7 +63,7 @@ class IssuesModule extends CWebModule
         // check if there's a proper provider set
         if(!in_array($this->provider, $this->providers, true))
         {
-            throw new CException(Yii::t('issues', 'Wrong Git SCM provider set, please check your config file.'));
+            throw new CException(Yii::t('issues', 'Wrong SCM provider set, please check your config file.'));
         }
 	}
 
