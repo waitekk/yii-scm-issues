@@ -14,12 +14,41 @@ class GithubScmProvider implements ScmProvider
     }
 
     /**
+     * Contructs operational URL
+     * API URL + username + repo slug
+     * @return mixed
+     */
+    public function constructOpUrl()
+    {
+        return $this->_apiURL.'repos/'.Yii::app()->modules['issues']['username'].'/'.Yii::app()->modules['issues']['repoSlug'].'/';
+    }
+
+    /**
      * Gets list of issues, associated with a repo
      * @return mixed
+     * @throws CException
      */
     public function getIssuesList()
     {
-        // TODO: Implement getIssuesList() method.
+        $opUrl = $this->constructOpUrl();
+        $opUrl .= 'issues';
+
+        $ch = curl_init();
+
+        curl_setopt($ch, CURLOPT_URL, $opUrl);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+
+        $result = curl_exec($ch);
+
+        if(!$result)
+        {
+            throw new CException(curl_error($ch));
+        }
+
+        curl_close($ch);
+
+        return json_decode($result);
     }
 
     /**
@@ -102,15 +131,5 @@ class GithubScmProvider implements ScmProvider
     public function deleteComment($comment_id, $issue_id = null)
     {
         // TODO: Implement deleteComment() method.
-    }
-
-    /**
-     * Contructs operational URL
-     * API URL + username + repo slug
-     * @return mixed
-     */
-    public function constructOpUrl()
-    {
-        // TODO: Implement constructOpUrl() method.
     }
 }
