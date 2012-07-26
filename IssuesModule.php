@@ -10,7 +10,6 @@
  * @license http://opensource.org/licenses/MIT MIT License
  */
 
-Yii::import('application.modules.issues.extensions.curl.Curl');
 class IssuesModule extends CWebModule
 {
     public $defaultController = 'tracker';
@@ -57,7 +56,7 @@ class IssuesModule extends CWebModule
 		$this->setImport(array(
 			'issues.models.*',
 			'issues.components.*',
-            'issues.extensions'
+            'issues.extensions',
 		));
 
         // check if there's a proper provider set

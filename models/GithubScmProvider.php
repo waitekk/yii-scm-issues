@@ -33,21 +33,7 @@ class GithubScmProvider implements ScmProvider
         $opUrl = $this->constructOpUrl();
         $opUrl .= 'issues';
 
-        $ch = curl_init();
-
-        curl_setopt($ch, CURLOPT_URL, $opUrl);
-        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-
-        $result = curl_exec($ch);
-
-        if(!$result)
-        {
-            throw new CException(curl_error($ch));
-        }
-
-        curl_close($ch);
-
+        $result = CurlWrapper::getResult($opUrl);
         return json_decode($result);
     }
 
