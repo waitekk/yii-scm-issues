@@ -18,12 +18,38 @@ class BitbucketScmProvider implements ScmProvider
     }
 
     /**
+     * @return mixed|string
+     */
+    public function constructOpUrl()
+    {
+        return $this->_apiURL.'repositories/'.Yii::app()->modules['issues']['username'].'/'.Yii::app()->modules['issues']['repoSlug'].'/';
+    }
+
+    /**
      * Gets list of issues, associated with a repo
      * @return mixed
      */
     public function getIssuesList()
     {
-        // TODO: Implement getIssuesList() method.
+        $opUrl = $this->constructOpUrl();
+        $opUrl .= 'issues/';
+
+        $ch = curl_init();
+
+        curl_setopt($ch, CURLOPT_URL, $opUrl);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+
+        $result = curl_exec($ch);
+
+        if(!$result)
+        {
+            throw new CException(curl_error($ch));
+        }
+
+        curl_close($ch);
+
+        return json_decode($result);
     }
 
     /**

@@ -104,5 +104,13 @@ class GithubScmProvider implements ScmProvider
         // TODO: Implement deleteComment() method.
     }
 
-
+    /**
+     * Contructs operational URL
+     * API URL + username + repo slug
+     * @return mixed
+     */
+    public function constructOpUrl()
+    {
+        // TODO: Implement constructOpUrl() method.
+    }
 }

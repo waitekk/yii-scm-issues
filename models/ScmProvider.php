@@ -93,4 +93,12 @@ interface ScmProvider
      * @return mixed
      */
     public function deleteComment($comment_id, $issue_id = null);
+
+    /**
+     * Contructs operational URL
+     * API URL + username + repo slug
+     * @abstract
+     * @return mixed
+     */
+    public function constructOpUrl();
 }
