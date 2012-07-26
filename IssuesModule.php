@@ -57,6 +57,7 @@ class IssuesModule extends CWebModule
 			'issues.models.*',
 			'issues.components.*',
             'issues.extensions',
+            'issues.extensions.timeago.*',
 		));
 
         // check if there's a proper provider set
