@@ -34,7 +34,35 @@ class GithubScmProvider implements ScmProvider
         $opUrl .= 'issues';
 
         $result = CurlWrapper::getResult($opUrl);
-        return json_decode($result);
+
+        $arrayResult = json_decode($result, true);
+
+        $issues = array();
+        if($arrayResult['message'] != 'Not found')
+        {
+            for($i = 0; $i < count($arrayResult); $i++)
+            {
+                $issue = $arrayResult[$i];
+
+                $issues[$i]['number'] = $issue['number'];
+                $issues[$i]['title'] = $issue['title'];
+                $issues[$i]['content'] = $issue['body'];
+                $issues[$i]['comments'] = $issue['comments'];
+                $issues[$i]['assignee'] = $issue['assignee'];
+                $issues[$i]['id'] = $issue['id'];
+                $issues[$i]['state'] = $issue['state'];
+                $issues[$i]['url'] = $issue['url'];
+                $issues[$i]['created_at'] = $issue['created_at'];
+                $issues[$i]['user']['username'] = $issue['user']['login'];
+                $issues[$i]['user']['url'] = $issue['user']['url'];
+            }
+        }
+        else {
+            throw new CException(Yii::t('issues', 'Failed to get issues'));
+        }
+
+        $dataProvider = new CArrayDataProvider($issues, array('keyField'=>'number'));
+        return $dataProvider;
     }
 
     /**

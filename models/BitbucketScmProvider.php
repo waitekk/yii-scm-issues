@@ -34,22 +34,39 @@ class BitbucketScmProvider implements ScmProvider
         $opUrl = $this->constructOpUrl();
         $opUrl .= 'issues/';
 
-        $ch = curl_init();
+        $result = CurlWrapper::getResult($opUrl);
 
-        curl_setopt($ch, CURLOPT_URL, $opUrl);
-        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-
-        $result = curl_exec($ch);
-
-        if(!$result)
+        if($result != 'Not Found')
         {
-            throw new CException(curl_error($ch));
+            $arrayResult = json_decode($result, true);
+
+            $issues = array();
+
+            for($i = 0; $i < count($arrayResult['issues']); $i++)
+            {
+                $issue = $arrayResult['issues'][$i];
+
+                $issues[$i]['number'] = $issue['local_id'];
+                $issues[$i]['title'] = $issue['title'];
+                $issues[$i]['content'] = $issue['content'];
+                $issues[$i]['comments'] = $issue['comment_count'];
+                $issues[$i]['assignee'] = $issue->assignee;
+                $issues[$i]['id'] = $issue->id;
+                $issues[$i]['state'] = $issue['status'];
+                $issues[$i]['url'] = $issue->url;
+                $issues[$i]['created_at'] = $issue['created_on'];
+                $issues[$i]['user']['username'] = $issue['reported_by']['username'];
+                $issues[$i]['user']['url'] = '#';
+                $issues[$i]['user']['first_name'] = $issue['reported_by']['first_name'];
+                $issues[$i]['user']['last_name'] = $issue['reported_by']['last_name'];
+            }
+        } else {
+            throw new CException(Yii::t('issues', 'Failed to get issues'));
         }
 
-        curl_close($ch);
+        $dataProvider = new CArrayDataProvider($issues, array('keyField'=>'number'));
 
-        return json_decode($result);
+        return $dataProvider;
     }
 
     /**

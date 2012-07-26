@@ -19,16 +19,8 @@ class TrackerController extends Controller
         // TODO: cleanup
         $provider = new $this->_provider();
 
-        $issuesList = $provider->getIssuesList();
+        $dataProvider = $provider->getIssuesList();
 
-        if($issuesList->count !=0)
-        {
-            $dataProvider = new CArrayDataProvider($issuesList->issues,
-                array(
-                    'keyField'=>'local_id',
-                )
-            );
-        }
         $this->render('index', compact('dataProvider'));
     }
 }
