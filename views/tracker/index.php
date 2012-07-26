@@ -7,4 +7,7 @@ $this->widget('zii.widgets.CListView',
     )
 );
 
+$this->widget('JTimeAgo', array(
+    'selector' => ' .timeago',
+));
 ?>

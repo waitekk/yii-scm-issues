@@ -1,6 +1,9 @@
 <table class="table">
     <tr>
-        <td class="span1">#<?php echo $data->local_id ?></td>
-        <td><h4><?php echo $data->title ?><br /><small><?php echo Yii::t('issues', 'Reported by')?> <?php echo $data->reported_by->first_name.' <a href="">'.$data->reported_by->username.'</a> '.$data->reported_by->last_name ?></small></h4>
+        <td class="span1">#<?php echo $data['number'] ?></td>
+        <td class="span1"><?php echo $data['state']?></td>
+        <td><h4><?php echo $data['title'] ?><br /><small><?php echo Yii::t('issues', 'Reported by')?> <?php echo '<a href="'.$data['user']['url'].'">'.$data['user']['username'].'</a>';?>
+            <time datetime="<?php echo $data['created_at'];?>" class="timeago"><?php echo $data['created_at'];?></time>
+            (<?php echo Yii::t('issues', 'Comments:')?> <?php echo $data['comments']?>)</small></h4>
     </tr>
 </table>

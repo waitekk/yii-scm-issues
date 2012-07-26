@@ -18,7 +18,7 @@
 
 <body>
 <div class="container">
-    <h1 style="margin:25px auto;"><?php echo Yii::t('issues', 'Issues tracker');?></h1>
+    <h1 style="margin:25px auto;"><?php echo Yii::t('issues', 'Issue tracker');?></h1>
     <?php
     if(Yii::app()->getRequest()->requestUri != '/')
     {
