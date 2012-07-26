@@ -16,9 +16,19 @@ class TrackerController extends Controller
 
     public function actionIndex()
     {
-        // TODO: replace with the actual code
+        // TODO: cleanup
         $provider = new $this->_provider();
 
-        $this->render('index');
+        $issuesList = $provider->getIssuesList();
+
+        if($issuesList->count !=0)
+        {
+            $dataProvider = new CArrayDataProvider($issuesList->issues,
+                array(
+                    'keyField'=>'local_id',
+                )
+            );
+        }
+        $this->render('index', compact('dataProvider'));
     }
 }
